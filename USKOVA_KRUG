@@ -1,0 +1,25 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+
+    setlocale(LC_ALL, "Russian");
+
+    double x, y;
+
+    cout << "Введите 2 числа "<< "\n";
+
+    cin >> x >> y;
+
+    if ((x*x + y*y <= 25) && (((x>=0) && (x<=5) && (abs(y)<=5)) || ((x>=-5) && (x <= 0) && (y>=-5) && (y <= 0))))
+    {
+        cout << "принадлежит" << endl;
+    }
+    else
+    {
+        cout << "не принадлежит" << endl;
+    }
+
+    return 0;
+    system("pause");
+}
