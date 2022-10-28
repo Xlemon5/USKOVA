@@ -1,0 +1,85 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int m, n;
+
+    cout << "Введите размерность матрицы (строки/столбцы): " << "\n";
+    cin >> m >> n;
+
+    double matrix[m][n];
+
+    //double ** matrix_tr = (double **) new double [10][10];
+
+    cout << "Введите значения матрицы" << "\n";
+
+    for (int i = 0; i < m; ++i)
+    {
+        for (int j = 0; j < n; ++j)
+        {
+            cin >> matrix[i][j];
+        }
+    }
+
+    cout << "\n";
+
+
+
+    if (m == n)                     //квадратная матрица
+    {
+        double matrix_tr[m][n];
+     // транспонированние матрицы   
+        for (int i = 0; i < m; ++i)
+        {
+            for (int j = 0; j < n; ++j)
+            {
+                matrix_tr[j][i] = matrix[i][j];
+            }
+        }
+
+    // вывод в for
+
+        cout << "Транспонированная матрица " << "\n";
+        for (int i = 0; i < m; ++i)
+        {
+            for (int j = 0; j < n; ++j)
+            {
+                cout << matrix_tr[i][j] << " ";
+            }
+            cout << "\n";
+        } 
+
+    }
+
+    else                            // прямоугольная матрица
+    {
+        double matrix_tr[n][m];
+        
+        for (int i = 0; i < m; ++i)
+        {
+            for (int j = 0; j < n; ++j)
+            {
+                matrix_tr[j][i] = matrix[i][j];
+            }
+        }
+
+
+        // вывод в else
+        cout << "Транспонированная матрица " << "\n";
+        for (int i = 0; i < n; ++i)
+        {
+            for (int j = 0; j < m; ++j)
+            {
+                cout << matrix_tr[i][j] << " ";
+            }
+
+            cout << "\n";
+        } 
+
+    }
+
+
+    return 0;
+    system("pause");
+}
