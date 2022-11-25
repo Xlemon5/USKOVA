@@ -1,0 +1,165 @@
+#include <iostream>
+#include <ctime>
+using namespace std;
+
+/////////////////////////////////////  ВВОД/ВЫВОД  //////////////////////////////////////////////////
+
+double** create_mtr (int rows, int columns)
+{
+    double** mtr = new double* [rows];
+    for(int i = 0; i < rows; ++i)
+    {
+        mtr[i] = new double[columns];
+    }
+    
+    for(int i = 0; i < rows; ++i)
+    {
+        for(int j = 0; j < columns; ++j)
+        {
+            mtr[i][j] = rand() % 20;
+        }
+    }
+    return mtr;
+}
+
+void output_mtr(double** mtr, int rows, int columns)
+{
+    for(int i = 0; i < rows; ++i)
+    {
+        for(int j = 0; j < columns; ++j)
+        {
+            cout << mtr[i][j]<< ' ';
+        }
+        cout <<'\n';
+    }
+}
+
+//////////////////////////////////////////   АРФИМ ДЕЙСТВИЯ    /////////////////////////////////////////////////////
+
+double** sum_mtr(double** A, double** B, int rows, int columns)
+{
+    double** mtr = new double* [rows];
+    for(int i = 0; i < rows; ++i)
+    {
+        mtr[i] = new double[columns];
+    }
+
+    for(int i = 0; i < rows; ++i)
+    {
+        for(int j = 0; j < columns; ++j)
+        {
+            mtr[i][j] = A[i][j] + B[i][j];
+        }
+    }
+
+    return mtr;
+}
+/////////////////////////////////////////////////////////////////
+
+void trnsp(double**& A, int& rows, int& columns)
+{
+    double** mtr = new double* [columns];
+    for(int i = 0; i < columns; ++i)
+    {
+        mtr[i] = new double[rows];
+    }
+
+    for(int i = 0; i < rows; ++i)
+    {
+        for(int j = 0; j < columns; ++j)
+        {
+            mtr[j][i] = A[i][j];
+        }
+    }
+
+    int s;
+    s = rows;
+    rows = columns;
+    columns = s;
+
+    A = mtr;
+}
+/////////////////////////////////////////////////////////////////
+double** mltply_on_numb(double** A, int rows, int columns, int numb)
+{
+    double** mtr = new double* [rows];
+    for(int i = 0; i < rows; ++i)
+    {
+        mtr[i] = new double[columns];
+    }
+
+    for(int i = 0; i < rows; ++i)
+    {
+        for(int j = 0; j < columns; ++j)
+        {
+            mtr[i][j] = A[i][j] * numb;
+        }
+    }
+
+    return mtr;
+}
+/////////////////////////////////////////////////////////////////
+
+
+
+
+double** mltply_mtr(double** A, int rowsA, int columnsA, double** B, int rowsB, int columnsB)
+{
+    double** mtr = new double* [rowsA];
+    for(int i = 0; i < rowsA; ++i)
+    {
+        mtr[i] = new double[columnsB];
+    }
+    int s = 0;
+
+    for(int i = 0; i < rowsA; ++i)
+    {
+        for(int j = 0; j < columnsB; ++j)
+        {
+            mtr[i][j] = 0;
+            for(int p = 0; columnsA; ++p)
+            {
+                mtr[i][j] += mtr[i][p] * mtr[p][j]; 
+            }
+        }
+    }
+
+    return mtr;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+int main()
+{
+    srand(time(0));
+
+    int rows, columns;
+    int numb;
+
+    cout << "Введите размерность строк/столбцов: " <<'\n';
+    cin >> rows >> columns;
+
+    //cout << "Введите число: " <<'\n';
+    //cin >> numb;
+
+    cout << '\n';
+
+    double** A = create_mtr(rows, columns);
+    output_mtr(A, rows, columns);
+
+    cout << '\n';
+
+    double** B = create_mtr(columns, rows);
+    output_mtr(B, columns, rows);
+
+    double** C = mltply_mtr(A, rows, columns, B, columns, rows);
+    output_mtr(C, rows, rows);
+
+
+
+
+    cout << '\n';
+
+
+    return 0;    
+}
