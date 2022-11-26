@@ -100,9 +100,6 @@ double** mltply_on_numb(double** A, int rows, int columns, int numb)
 }
 /////////////////////////////////////////////////////////////////
 
-
-
-
 double** mltply_mtr(double** A, int rowsA, int columnsA, double** B, int rowsB, int columnsB)
 {
     double** mtr = new double* [rowsA];
@@ -110,16 +107,16 @@ double** mltply_mtr(double** A, int rowsA, int columnsA, double** B, int rowsB, 
     {
         mtr[i] = new double[columnsB];
     }
-    int s = 0;
+
 
     for(int i = 0; i < rowsA; ++i)
     {
         for(int j = 0; j < columnsB; ++j)
         {
             mtr[i][j] = 0;
-            for(int p = 0; columnsA; ++p)
+            for(int p = 0; p < columnsA; ++p)
             {
-                mtr[i][j] += mtr[i][p] * mtr[p][j]; 
+                mtr[i][j] += (A[i][p] * B[p][j]); 
             }
         }
     }
@@ -133,33 +130,35 @@ int main()
 {
     srand(time(0));
 
-    int rows, columns;
+    int rowsA, columnsA;
+    int rowsB, columnsB;
     int numb;
 
-    cout << "Введите размерность строк/столбцов: " <<'\n';
-    cin >> rows >> columns;
+    cout << "Введите размерность строк/столбцов (A): " <<'\n';
+    cin >> rowsA >> columnsA;
 
-    //cout << "Введите число: " <<'\n';
-    //cin >> numb;
-
-    cout << '\n';
-
-    double** A = create_mtr(rows, columns);
-    output_mtr(A, rows, columns);
+    cout << "Введите размерность строк/столбцов (B): " <<'\n';
+    cin >> rowsB >> columnsB;
 
     cout << '\n';
 
-    double** B = create_mtr(columns, rows);
-    output_mtr(B, columns, rows);
+    double** A = create_mtr(rowsA, columnsA);
+    output_mtr(A, rowsA, columnsA);
 
-    double** C = mltply_mtr(A, rows, columns, B, columns, rows);
-    output_mtr(C, rows, rows);
+    cout << '\n'; 
+
+    double** B = create_mtr(rowsB, columnsB);
+    output_mtr(B, rowsB, columnsB);
 
 
+    double** C = sum_mtr(A, B, rowsA, columnsA);
 
 
     cout << '\n';
 
+    output_mtr(C, rowsA, columnsB);
+
+    cout << '\n';
 
     return 0;    
 }
