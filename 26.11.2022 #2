@@ -1,0 +1,50 @@
+#include <iostream>
+#include <ctime>
+using namespace std;
+
+
+int main()
+{
+    srand(time(0));
+
+    int n = 100;
+
+    int* arr = new int [n];
+    int* arr_copy = new int [n];
+
+    for(int i = 0; i < n; ++i)
+    {
+        arr[i] = rand()%10;
+        cout << arr[i]<<' ';
+    }
+    int arr_min = arr[0], arr_max = arr[0];
+
+    // Нахожу макс и мин элементы
+    for(int i = 1; i < n; ++i)
+    {
+        if(arr[i] > arr_max)
+        {
+            arr_max = arr[i];
+        }
+
+        if(arr[i] < arr_min)
+        {
+           arr_min = arr[i];
+        }
+    }
+
+
+    cout <<'\n';
+    // нахожу новый массив без мин и макс
+    for(int i = 0; i < n; ++i)
+    {
+        if((arr[i]!=arr_max) && (arr[i] != arr_min))
+        {
+            arr_copy[i] = arr[i];
+            cout << arr_copy[i]<<' ';
+        }
+    }
+
+
+    return 0;
+}
