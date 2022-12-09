@@ -1,0 +1,179 @@
+// ДАНА КВАДРАТНАЯ МАТРИЦА. Если сумма элементов строки больше суммы элементов столбца, то удалить из данной матрицы эту строку. 
+
+#include <iostream>
+#include <ctime>
+using namespace std;
+
+
+
+int main()
+{
+    srand(time(0));
+    setlocale(LC_ALL, "Russian");
+
+    int row = 0, column = 0;
+
+    cout << "Введите размерность матрицы: " << '\n';
+    cin >> row >> column;
+
+
+    // СОЗДАНИЕ МАТРИЦЫ
+    int** array = new int *[row];
+    for(int i = 0; i < row; ++i)
+    {
+        array[i] = new int [column];
+    }
+
+    // ЗАПОЛНЕНИЕ МАТРИЦЫ СЛУЧАЙНЫМИ ЧИСЛАМИ
+    for(int i = 0; i < row; ++i)
+    {
+        for(int j = 0; j < column; ++j)
+        {
+            array[i][j] = rand() % 10;
+        }
+    }
+
+    //ВЫВОД НАЧАЛЬНОЙ МАТРИЦЫ
+
+    cout << "Начальная матрица: " << '\n';
+    for(int i = 0; i < row; ++i)
+    {
+        for(int j = 0; j < column; ++j)
+        {
+            cout << array[i][j] << ' ';
+        }
+        cout << '\n';
+    }
+
+///////////////////////////////////////////// MAIN - PART OPEN /////////////////////////////////////////////
+
+    int sum_column = 0, sum_row = 0;
+    int *array_flag_of_row = new int [row];
+
+    int count = 0;
+
+    for(int i = 0; i < row; ++i)
+    {
+        for(int j = 0; j < column; ++j)
+        {
+            sum_row += array[i][j];
+            sum_column += array[j][i];
+        }
+
+        if(sum_row > sum_column)
+        {
+            array_flag_of_row[i] = 1;
+            count += 1;
+        }
+
+        // DEBUG OUTPUT
+        //cout << "Сумма строки " << i+1 << ' ' << sum_row << ' ' << sum_column << '\n';
+
+        sum_row = 0;
+        sum_column = 0;
+    }
+
+    if(count == row)
+    {
+        cout << "ВСЕ СТРОКИ УДАЛЕНЫ! " << '\n';
+        return 0;
+    }
+
+
+    // СОЗДАНИЕ ИЗМЕНЕННОЙ МАТРИЦЫ
+
+    int row_new_array = 0, k = 0;
+    row_new_array = row - count;
+
+    int** array_new = new int *[row_new_array];
+    for(int i = 0; i < row_new_array; ++i)
+    {
+        array_new[i] = new int [column];
+    }
+
+
+    // ЗАПОЛНЕНИЕ ИЗМЕНЕННОЙ МАТРИЦЫ
+
+    /*
+    for(int i = 0; i < row; ++i)
+    {
+        for(int j = 0; j < column; ++j)
+        {
+            if(array_flag_of_row[i] == 0)
+            {
+                array_new[k][j] = array[i][j];
+            }
+        }
+        k += 1;
+    }
+    */
+
+    for(int i = 0; i < row; ++i)
+    {
+        if(array_flag_of_row[i] == 0)
+        {
+            for (int j = 0; j < column; ++j)
+            {
+                array_new[k][j] = array[i][j];
+            }
+
+            k += 1;
+        }
+    }
+
+
+///////////////////////////////////////////// MAIN - PART CLOSE /////////////////////////////////////////////
+    cout << '\n';
+
+
+    cout << "Массив флагов: " << '\n';
+    for(int i = 0; i < row; ++i)
+    {
+        cout << array_flag_of_row[i] << '\n';
+    }
+    cout << '\n';
+
+
+    //ВЫВОД ПРЕОБРАЗОВАННОЙ МАТРИЦЫ
+
+    cout << "Преобразованная матрица: " << '\n';
+    for(int i = 0; i < row_new_array; ++i)
+    {
+        for(int j = 0; j < column; ++j)
+        {
+            cout << array_new[i][j] << ' ';
+        }
+        cout << '\n';
+    }
+
+
+
+
+
+///////////////////////////////////////////// LAST - PART  /////////////////////////////////////////////
+
+    // УДАЛЕНИЕ МАТРИЦЫ
+    for(int i = 0; i < row; ++ i)
+    {
+        delete[] array[i];
+    }
+    delete[] array;
+
+
+
+    // УДАЛЕНИЕ ИЗМЕНЕННОЙ МАТРИЦЫ
+    for(int i = 0; i < row_new_array; ++ i)
+    {
+        delete[] array_new[i];
+    }
+    delete[] array_new;
+
+
+    // УДАЛЕНИЕ МАССИВА ФЛАГОВ
+    delete[] array_flag_of_row ;
+
+
+    //////////////////////////////////////////////////
+
+    return 0;
+}
