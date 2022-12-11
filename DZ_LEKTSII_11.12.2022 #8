@@ -1,0 +1,133 @@
+//ДАНА КВАДРАТНАЯ МАТРИЦА ИЗ РАЗНЫХ ЦЕЛЫХ ЧИСЕЛ, ПОРЯДОК КОТОРОЙ (n, n). Удалить столбце, в котором находится минимальный элемент всей матрицы
+
+#include <iostream>
+#include <ctime>
+#include <iomanip>
+using namespace std;
+
+
+int main()
+{
+    setlocale(LC_ALL, "Russian");
+    srand(time(0));
+
+    const int n = 3;
+    int arr[n][n];
+
+    // ЗАПОЛНЕНИЕ РАНДОМНЫМИ ЧИСЛАМИ
+    for(int i = 0; i < n; ++ i)
+    {
+        for(int j = 0; j < n; ++j)
+        {
+            arr[i][j] = rand() % 20;
+        }
+    }
+
+
+    // ВЫВОД НАЧАЛЬНОЙ МАТРИЦЫ
+    cout << "Данная матрица:" << '\n';
+    for(int i = 0; i < n; ++ i)
+    {
+        for(int j = 0; j < n; ++j)
+        {
+            cout << setw(3) <<arr[i][j] << ' ';
+        }
+        cout << '\n';
+    }
+
+    cout << '\n';
+
+    // НАХОЖДЕНИЕ МИНИМАЛЬНОГО ЭЛЕМЕНТА МАТРИЦЫ
+
+    int arr_min = arr[0][0];
+
+    for(int i = 0; i < n; ++ i)
+    {
+        for(int j = 0; j < n; ++j)
+        {
+            if(arr[i][j] < arr_min)
+            {
+                arr_min = arr[i][j];
+            }
+        }
+    }
+
+    cout << "Минимальный элемент матрицы: " << arr_min << '\n';
+    cout << '\n';
+
+    // НАХОЖДЕНИЕ СТОЛБЦОВ, КОТОРЫЕ НУЖНО УДАЛИТЬ
+
+    int count = 0;
+
+    int flag_column[n];
+    for(int i = 0; i < n; ++i)
+    {
+        flag_column[i] = 0;
+    }
+
+
+    for(int i = 0; i < n; ++ i)
+    {
+        for(int j = 0; j < n; ++j)
+        {
+            if(arr[j][i] == arr_min)
+            {
+                count += 1;
+                flag_column[i] = 1;
+                break;
+            }
+        }
+    }
+
+    cout << "ВЫВОД МАССИВА ВЛАГОВ ПО СТОЛБЦАМ: " << '\n';
+    for(int i = 0; i < n; ++i)
+    {
+        cout << flag_column[i] << ' ';
+    }
+
+    cout << '\n';
+    cout << '\n';
+
+    //УДАЛЕНИЕ СТОЛБЦОВ
+
+
+    int k = 0;
+
+    if(n - count == 0)
+    {
+        cout << "Все столбцы удалены! " << '\n';
+    }
+    else
+    {
+        int new_arr[n][n - count];
+
+        for(int i = 0; i < n; ++i)
+        {
+            if(flag_column[i] == 0)
+            {
+                for(int j = 0; j < n; ++j)
+                {
+                    new_arr[j][k] = arr[j][i];
+                }
+
+                k += 1;
+            }
+        }
+
+
+        // ВЫВОД ПРЕОБРАЗОВАННОЙ МАТРИЦЫ
+        cout << "Преобразованная матрица: " << '\n';
+
+        for(int i = 0; i < n; ++ i)
+        {
+            for(int j = 0; j < (n - count); ++j)
+            {
+                cout << setw(4) << new_arr[i][j] << ' ';
+            }
+            cout << '\n';
+        }
+    }
+
+
+    return 0;
+}
