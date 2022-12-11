@@ -1,0 +1,42 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    setlocale(LC_ALL, "Russian");
+
+    const int len = 7;
+
+    int arrA[len] = {957, -10, 1851, -1000, -1, 7, -251};
+    int arrB[len];
+
+    for(int i = 0; i < len; ++i)
+    {
+        if(*(arrA + i) > 0)
+        {
+            *(arrB + i) = *(arrA + i) + *(arrA + i) % 10;
+        }
+        else
+        {
+            *(arrB + i) = *(arrA + i);
+        }
+    }
+
+    cout << "Массив А: " << '\n';
+    for(int i = 0; i < len; ++i)
+    {
+        cout << *(arrA + i) << ' ';
+    }
+
+    cout << '\n';
+    cout << '\n';
+
+    cout << "Массив B: " << '\n';
+    for(int i = 0; i < len; ++i)
+    {
+        cout << *(arrB + i) << ' ';
+    }
+
+
+    return 0;
+}
